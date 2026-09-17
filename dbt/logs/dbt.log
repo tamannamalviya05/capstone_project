@@ -1,0 +1,38 @@
+[0m21:17:30.773943 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A807943DD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A807941C10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A807943AD0>]}
+
+
+============================== 21:17:30.773943 | f6efc28f-19c9-4aa4-98e5-e52081a452ce ==============================
+[0m21:17:30.773943 [info ] [MainThread]: Running with dbt=1.11.11
+[0m21:17:30.786805 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': 'C:\\Users\\dell\\.dbt', 'use_colors': 'True', 'indirect_selection': 'eager', 'invocation_command': 'dbt init analytics --skip-profile-setup', 'use_experimental_parser': 'False', 'log_path': 'logs'}
+[0m21:17:30.841841 [info ] [MainThread]: A project called analytics already exists here.
+[0m21:17:30.844629 [debug] [MainThread]: Command `python -m dbt.cli.main init` succeeded at 21:17:30.844629 after 0.27 seconds
+[0m21:17:30.844629 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A807937E90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A80796DC90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A807936290>]}
+[0m21:17:30.846724 [debug] [MainThread]: Flushing usage events
+[0m21:17:33.224208 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m21:18:16.432629 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001D8E3E43C90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001D8E3E41D90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001D8E3E43850>]}
+
+
+============================== 21:18:16.448671 | 981cbb61-39eb-4b6f-8a15-a50a2e3ece3c ==============================
+[0m21:18:16.448671 [info ] [MainThread]: Running with dbt=1.11.11
+[0m21:18:16.448671 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': 'C:\\Users\\dell\\.dbt', 'use_colors': 'True', 'invocation_command': 'dbt init analytics --skip-profile-setup', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'log_path': 'logs'}
+[0m21:18:16.511777 [debug] [MainThread]: Starter project path: C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\dbt\include\starter_project
+[0m21:18:16.664700 [info ] [MainThread]: 
+Your new dbt project "analytics" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m21:18:16.664700 [debug] [MainThread]: Command `python -m dbt.cli.main init` succeeded at 21:18:16.664700 after 0.40 seconds
+[0m21:18:16.664700 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001D8E3E34850>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001D8E3E34810>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001D8E3E34710>]}
+[0m21:18:16.672019 [debug] [MainThread]: Flushing usage events
+[0m21:18:18.406088 [debug] [MainThread]: An error was encountered while trying to flush usage events

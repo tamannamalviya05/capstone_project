@@ -1,0 +1,80 @@
+version: 2
+
+models:
+ - name: dim_accounts
+   columns:
+    - name: ACCOUNT_ID
+      tests:
+       - not_null
+       - unique
+ - name: dim_branch
+   columns:
+    - name: BRANCH_ID
+      tests:
+       - not_null
+       - unique
+ - name: dim_complaint
+   columns:
+    - name: COMPLAINT_ID
+      tests: 
+       - not_null
+       - unique
+ - name: dim_credit_card
+   columns:
+    - name: CREDIT_CARD_ID
+      tests:
+       - not_null
+       - unique
+ - name: dim_customers
+   columns:
+    - name: CUSTOMER_ID
+      tests:
+       - not_null
+       - unique
+ - name: dim_loan
+   columns:
+    - name: LOAN_ID
+      tests:
+       - not_null
+       - unique
+ - name: dim_merchant
+   columns:
+    - name: MERCHANT_NAME
+      tests:
+       - not_null
+ - name: dim_payments
+   columns: 
+    - name: PAYMENT_CHANNEL
+      tests:
+       - not_null
+
+    - name: PAYMENT_METHOD
+      tests: 
+       - not_null
+
+    - name: PAYMENT_KEY
+      tests:
+       - not_null
+       - unique
+ - name: fact_transaction
+   columns:
+    - name: TRANSACTION_ID
+      tests: 
+       - not_null
+       - unique
+
+    - name: ACCOUNT_ID
+      tests:
+       - not_null
+    - name: BRANCH_ID
+      tests:
+       - not_null
+    - name: CUSTOMER_ID
+      tests:
+       - not_null
+    - name: AMOUNT
+      tests:
+       - not_null
+    - name: TRANSACTION_DATE
+      tests:
+       - not_null

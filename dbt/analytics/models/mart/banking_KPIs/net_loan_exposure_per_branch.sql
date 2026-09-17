@@ -1,0 +1,53 @@
+{{ config (schema = 'MART',
+           materialized = 'view')}}
+
+WITH CTE1 AS (
+    SELECT
+        LOAN_ID,
+        SUM(AMOUNT) AS TOTAL_REPAYMENTS
+    FROM {{ ref ('fact_transaction') }}
+    WHERE LOAN_ID IS NOT NULL AND LOAN_ID <> 'N/A' AND TRANSACTION_TYPE = 'LOAN_EMI_PAYMENT'
+    GROUP BY LOAN_ID),
+
+CTE2 AS (
+    SELECT
+        b.BRANCH_NAME,
+        c.CUSTOMER_ID,
+        c.CUSTOMER_NAME,
+        l.LOAN_TYPE,
+        l.LOAN_AMOUNT,
+        COALESCE(r.TOTAL_REPAYMENTS, 0) AS TOTAL_REPAYMENTS,
+        l.LOAN_AMOUNT - COALESCE(r.TOTAL_REPAYMENTS, 0) AS NET_LOAN_EXPOSURE
+    FROM {{ ref ('dim_loan') }} AS l
+    JOIN {{ ref ('fact_transaction') }} AS t ON l.LOAN_ID = t.LOAN_ID
+    JOIN {{ ref ('dim_branch') }} AS b ON t.BRANCH_ID = b.BRANCH_ID
+    JOIN {{ ref ('dim_customers') }} AS c ON t.CUSTOMER_ID = c.CUSTOMER_ID
+    LEFT JOIN CTE1 r ON l.LOAN_ID = r.LOAN_ID
+    WHERE l.LOAN_STATUS IN ('ACTIVE', 'RESTRUCTURED')),
+
+CTE3 AS (
+    SELECT DISTINCT
+        BRANCH_NAME,
+        CUSTOMER_ID,
+        CUSTOMER_NAME,
+        LOAN_TYPE,
+        LOAN_AMOUNT,
+        TOTAL_REPAYMENTS,
+        NET_LOAN_EXPOSURE
+    FROM CTE2),
+CTE4 AS (
+    SELECT
+        *, ROW_NUMBER() OVER ( PARTITION BY BRANCH_NAME ORDER BY NET_LOAN_EXPOSURE DESC) AS RANK_IN_BRANCH
+    FROM CTE3)
+SELECT
+    BRANCH_NAME,
+    CUSTOMER_ID,
+    CUSTOMER_NAME,
+    LOAN_TYPE,
+    LOAN_AMOUNT,
+    TOTAL_REPAYMENTS,
+    NET_LOAN_EXPOSURE,
+    RANK_IN_BRANCH
+FROM CTE4
+WHERE RANK_IN_BRANCH <= 5
+ORDER BY BRANCH_NAME, RANK_IN_BRANCH

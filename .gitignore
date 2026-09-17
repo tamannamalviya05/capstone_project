@@ -1,0 +1,5 @@
+airflow/logs/
+airflow/logs/
+airflow/data/banking_datset_1.csv
+airflow/data/banking_datset_1.csv
+.venv/
