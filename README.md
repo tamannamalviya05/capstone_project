@@ -77,4 +77,3 @@ Trigger the `banking_raw_ingestion` DAG to run the complete pipeline.
 ## 👩‍💻 Author
 
 **Tamanna Malviya**
- Data Engineer
