@@ -1,24 +1,28 @@
-{{ config (schema = 'CORE',
-           materialized = 'table') }}
+{{ config(
+    schema = 'CORE',
+    materialized = 'table'
+) }}
 
 WITH date_spine AS (
-    SELECT DATEADD(day, SEQ4(), '2025-01-01':: DATE) AS date_day
-    FROM TABLE (GENERATOR(ROWCOUNT => 10000))
-) 
+    SELECT DATEADD(day, SEQ4(), '2025-01-01'::DATE) AS date_day
+    FROM TABLE(GENERATOR(ROWCOUNT => 10000))
+)
 
-SELECT 
-  date_day AS date_key,
-  date_day,
-  YEAR(date_day) AS year,
-  QUARTER(date_day) AS quarter,
-  MONTH(date_day) AS month,
-  MONTHNAME(date_day) AS month_name,
-  WEEK(date_day) AS week_of_year,
-  DAY(date_day) AS day_of_month,
-  DAYOFWEEK(date_day) AS day_of_week,
-  DAYNAME(date_day) AS day_name,
-  CASE WHEN DAYOFWEEK(date_day) IN (0,7)
-       THEN TRUE ELSE FALSE
-  END AS is_weekend
+SELECT
+    TO_NUMBER(TO_CHAR(date_day, 'YYYYMMDD')) AS DATE_KEY,
+    date_day AS DATE_DAY,
+    YEAR(date_day) AS YEAR,
+    QUARTER(date_day) AS QUARTER,
+    MONTH(date_day) AS MONTH,
+    MONTHNAME(date_day) AS MONTH_NAME,
+    WEEK(date_day) AS WEEK_OF_YEAR,
+    DAY(date_day) AS DAY_OF_MONTH,
+    DAYOFWEEK(date_day) AS DAY_OF_WEEK,
+    DAYNAME(date_day) AS DAY_NAME,
+    CASE
+        WHEN DAYOFWEEK(date_day) IN (0, 7)
+        THEN TRUE
+        ELSE FALSE
+    END AS IS_WEEKEND
 
 FROM date_spine

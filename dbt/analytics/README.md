@@ -1,15 +1,63 @@
-Welcome to your new dbt project!
+Banking ELT Data Pipeline
+📌 Overview
+An end-to-end incremental ELT pipeline for banking transaction data using Apache Airflow, Snowflake, dbt, Python, SQL, Docker, and Git.
 
-### Using the starter project
+The pipeline ingests CSV files into Snowflake and transforms them through multiple data warehouse layers.
 
-Try running the following commands:
-- dbt run
-- dbt test
+🔄 Pipeline Architecture
+CSV Files
+   ↓
+Apache Airflow
+   ↓
+Snowflake RAW
+   ↓
+dbt STAGING
+   ↓
+dbt CORE
+(Dimensions & Fact)
+   ↓
+dbt MART
+(KPIs & Analytics)
 
+🛠️ Tech Stack
+Python – Data ingestion
+Apache Airflow – Pipeline orchestration
+Snowflake – Data warehouse
+dbt – Data transformation & testing
+SQL – Data modeling & analytics
+Docker – Containerization
+Git – Version control
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+⚡ Key Features
+Incremental data processing
+Automated CSV ingestion
+RAW → STAGING → CORE → MART architecture
+Dimensional and fact modeling
+dbt data quality tests
+Analytics-ready KPI views
+Airflow end-to-end orchestration
+Docker-based environment
+
+📊 Analytics
+The MART layer provides metrics such as:
+
+Monthly transaction performance
+Customer performance
+Branch performance
+Payment method usage
+Loan exposure
+Complaint resolution
+Transaction success rates
+
+🚀 Run
+Start the Airflow environment:
+
+cd airflow
+docker compose up -d
+Then open:
+
+http://localhost:8080
+Trigger the banking_raw_ingestion DAG to run the complete pipeline.
+
+👩‍💻 Author
+Tamanna Malviya

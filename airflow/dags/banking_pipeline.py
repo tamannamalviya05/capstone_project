@@ -104,46 +104,45 @@ with DAG(
         python_callable=load_csv_files,)
 
     dbt_staging = BashOperator(
-
         task_id="dbt_staging",
-
         bash_command="""
         cd "/opt/airflow/dbt/analytics"
-
         dbt build \
           --project-dir "/opt/airflow/dbt/analytics" \
           --profiles-dir "/home/airflow/.dbt" \
           --select "path:models/staging"
         """,
-
     )
 
+    dbt_snapshot = BashOperator(
+    task_id="dbt_snapshot",
+    bash_command="""
+    cd "/opt/airflow/dbt/analytics"
+    dbt snapshot \
+      --project-dir "/opt/airflow/dbt/analytics" \
+      --profiles-dir "/home/airflow/.dbt"
+    """,
+)
+
     dbt_core = BashOperator(
-
         task_id="dbt_core",
-
         bash_command="""
         cd "/opt/airflow/dbt/analytics"
-
         dbt build \
           --project-dir "/opt/airflow/dbt/analytics" \
           --profiles-dir "/home/airflow/.dbt" \
           --select "path:models/intermediate"
         """,
-
     )
 
     dbt_mart = BashOperator(
-
         task_id="dbt_mart",
-
         bash_command="""
         cd /opt/airflow/dbt/analytics
-
         dbt build \
           --project-dir /opt/airflow/dbt/analytics \
           --profiles-dir /home/airflow/.dbt \
           --select "path:models/mart"
         """,
     )
-    load_raw_data >> dbt_staging >> dbt_core >> dbt_mart
+    load_raw_data >> dbt_staging >> dbt_snapshot >> dbt_core >> dbt_mart
