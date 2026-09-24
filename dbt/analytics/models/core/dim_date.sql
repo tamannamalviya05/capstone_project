@@ -18,11 +18,6 @@ SELECT
     WEEK(date_day) AS WEEK_OF_YEAR,
     DAY(date_day) AS DAY_OF_MONTH,
     DAYOFWEEK(date_day) AS DAY_OF_WEEK,
-    DAYNAME(date_day) AS DAY_NAME,
-    CASE
-        WHEN DAYOFWEEK(date_day) IN (0, 7)
-        THEN TRUE
-        ELSE FALSE
-    END AS IS_WEEKEND
+    CASE WHEN DAYOFWEEKISO(date_day) IN (6, 7)  THEN TRUE ELSE FALSE END AS IS_WEEKEND
 
 FROM date_spine

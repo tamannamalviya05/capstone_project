@@ -91,7 +91,7 @@ default_args = {
 }
 
 with DAG(
-    dag_id="banking_raw_ingestion",
+    dag_id="banking_pipeline",
     default_args=default_args,
     start_date=datetime(2026, 1, 1),
     schedule=None,
@@ -131,7 +131,7 @@ with DAG(
         dbt build \
           --project-dir "/opt/airflow/dbt/analytics" \
           --profiles-dir "/home/airflow/.dbt" \
-          --select "path:models/intermediate"
+          --select "path:models/core"
         """,
     )
 
