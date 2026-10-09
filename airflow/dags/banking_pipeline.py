@@ -40,6 +40,25 @@ def load_csv_files():
         print("CSV columns:")
         print(columns)
 
+        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {DATABASE}")
+        cursor.execute(f"USE DATABASE {DATABASE}")
+ 
+        pipeline_schemas = list(dict.fromkeys([SCHEMA, "STAGING", "CORE", "MART"]))
+        for s in pipeline_schemas:
+            cursor.execute(f"CREATE SCHEMA IF NOT EXISTS {DATABASE}.{s}")
+ 
+        print(f"Ensuring stage '@{DATABASE}.{SCHEMA}.{STAGE}' and format '{FILE_FORMAT}' exist...")
+        cursor.execute(f"CREATE STAGE IF NOT EXISTS {DATABASE}.{SCHEMA}.{STAGE}")
+        cursor.execute(f"""
+        CREATE FILE FORMAT IF NOT EXISTS {FILE_FORMAT}
+        TYPE = 'CSV'
+        FIELD_DELIMITER = ','
+        SKIP_HEADER = 1
+        FIELD_OPTIONALLY_ENCLOSED_BY = '\"'
+        NULL_IF = ('NULL', 'null', '')
+        EMPTY_FIELD_AS_NULL = TRUE
+        """)
+
         column_sql = ", ".join(
             f'"{column}" VARCHAR'
             for column in columns)
@@ -47,6 +66,7 @@ def load_csv_files():
         CREATE TABLE IF NOT EXISTS
         {DATABASE}.{SCHEMA}.{TABLE}
         ({column_sql},
+          _SOURCE_FILE VARCHAR,
           _LOADED_AT TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP())"""
         cursor.execute(create_table_sql)
 
@@ -66,10 +86,12 @@ def load_csv_files():
         copy_sql = f"""
         COPY INTO {DATABASE}.{SCHEMA}.{TABLE}
         ({target_columns},
+          _SOURCE_FILE,
           _LOADED_AT)
         FROM
         (SELECT
             {select_columns},
+            METADATA$FILENAME,
             CURRENT_TIMESTAMP()
         FROM @{DATABASE}.{SCHEMA}.{STAGE})
         FILE_FORMAT = (FORMAT_NAME = '{FILE_FORMAT}')
